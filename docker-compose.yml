@@ -4,8 +4,8 @@ services:
 
   mariadb:
     image: mariadb:latest
-    container-name: db-${PROJECT_DOMAIN}
-    env_file: ".env.mariadb"
+    container_name: db-${PROJECT_DOMAIN}
+    env_file: ".mariadb.env"
     ports:
       - "3306:3306"
     volumes:
@@ -22,8 +22,8 @@ services:
 
   wordpress:
     image: bitnami/wordpress:latest
-    container-name: wordpress-${PROJECT_DOMAIN}
-    env_file: ".env.wordpress"
+    container_name: wordpress-${PROJECT_DOMAIN}
+    env_file: ".wordpress.env"
     volumes:
       - wordpress_data:/bitnami/wordpress
     networks:
@@ -56,8 +56,7 @@ services:
 
   traefik:
     image: traefik:latest
-    container-name: traefik-${PROJECT_DOMAIN}
-    env_file: ".env.traefik"
+    container_name: traefik-${PROJECT_DOMAIN}
     command:
       - "--log.level=${TRAEFIK_LOG_LEVEL}"
       - "--accesslog=true"
@@ -109,7 +108,7 @@ services:
 
   redis:
     image: redis:alpine
-    container-name: redis-${PROJECT_DOMAIN}
+    container_name: redis-${PROJECT_DOMAIN}
     networks:
       - wordpress-${PROJECT_DOMAIN}_net
     healthcheck:
@@ -125,9 +124,9 @@ volumes:
   wordpress_data:
 
 networks:
-  wordpress-${PROJECT_DOMAIN}_net:
+  wordpress-localhost_net:
     driver: bridge
-  traefik-${PROJECT_DOMAIN}_net:
+  traefik-localhost_net:
     external: true
     name: traefik-network
 
