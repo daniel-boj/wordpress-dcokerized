@@ -107,6 +107,19 @@ services:
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
     restart: unless-stopped
 
+  redis:
+    image: redis:alpine
+    container-name: redis-${PROJECT_DOMAIN}
+    networks:
+      - wordpress-${PROJECT_DOMAIN}_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
 volumes:
   mariadb_data:
   wordpress_data:
