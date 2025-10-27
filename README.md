@@ -1,4 +1,4 @@
-# wordpress-dcokerized
+# WordPress in a Docker makes me happy
 Running WordPress with Docker
 
 ## Prerequisites
