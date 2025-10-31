@@ -1,6 +1,6 @@
 MARIADB_DATABASE=your_database_name
 MARIADB_USER=your_username
 MARIADB_PASSWORD=your_password
-MARIASDB_ROOT_PASSWORD=your_root_password
+MARIADB_ROOT_PASSWORD=your_root_password
 
 ALLOW_EMPTY_PASSWORD=no
