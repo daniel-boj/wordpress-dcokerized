@@ -78,6 +78,7 @@ services:
       - "--global.sendAnonymousUsage=false"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./acme:/etc/traefik/acme"
     networks:
       - traefik-${PROJECT_DOMAIN}_net
     ports:
