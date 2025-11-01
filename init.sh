@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/bash
 
 set -euo pipefail
 
@@ -11,7 +11,7 @@ for file in env-example mariadb-env-example traefik-env-example wordpress-env-ex
 done
 
 # Verify that htpasswd command is installed
-if ! command -v htpasswd &>/dev/nul; then\
+if ! command -v htpasswd &>/dev/null; then
 		echo 'htpaswd command is not installed, you have to install apache2-utils package, please'
 		exit 1
 fi
@@ -35,7 +35,7 @@ prompt_var() {
 				read -p "Set the value for $var_name: " value
 		fi
 
-		echo '${var_name} is ${value}'
+		echo "${var_name}=${value}"
 }
 
 # MariaDB env
@@ -56,7 +56,7 @@ echo 'Setting Traefik'
   echo "Setting the password for TRAEFIK_BASIC_AUTH (user: traefikadmin)"
   read -s -p "Please, set a secure password for traefikadmin: " traefik_pass
   echo
-  basic_auth=$(htpasswd -n traefikadmin "$traefik_pass" | sed 's/\\$/\\\\$/g')
+  basic_auth=$(htpasswd -nb traefikadmin "$traefik_pass" | sed 's/\\$/\\\\$/g')
   echo "TRAEFIK_BASIC_AUTH='${basic_auth}'"
 } > .traefik.env
 
@@ -81,7 +81,7 @@ cat .wordpress.env >> .env
 cat .traefik.env >> .env
 cat .mariadb.env >> .env
 
-echo 'Environment ready! Please, check the values:'
+echo 'Environment ready! Please, check the values in:'
 echo "  - .env"
 echo "  - .traefik.env"
 echo "  - .mariadb.env"
