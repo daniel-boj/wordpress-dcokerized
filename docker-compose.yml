@@ -69,9 +69,13 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.endpoint=unix:///var/run/docker.sock"
       - "--providers.docker.exposedByDefault=false"
-      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+#      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.delayBeforeCheck=0"
       - "--certificatesresolvers.letsencrypt.acme.email=${TRAEFIK_ACME_EMAIL}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.delayBeforeCheck=30"
       - "--metrics.prometheus=true"
       - "--metrics.prometheus.buckets=0.1,0.3,1.2,5.0"
       - "--global.checkNewVersion=true"
@@ -84,6 +88,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    env_file: ".traefik.env"
     healthcheck:
       test: ["CMD", "wget", "http://localhost:8082/ping","--spider"]
       interval: 10s
@@ -125,9 +130,9 @@ volumes:
   wordpress_data:
 
 networks:
-  wordpress-localhost_net:
+  wordpress-salvandohuellas.dboj-sol.nom.es_net:
     driver: bridge
-  traefik-localhost_net:
+  traefik-salvandohuellas.dboj-sol.nom.es_net:
     external: true
     name: traefik-network
 
